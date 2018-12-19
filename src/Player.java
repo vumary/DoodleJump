@@ -34,14 +34,14 @@ public class Player {
 	
 	//move object its call on to the left
 	public void moveLeft() {
-		x-=width;
+		x-=10;
 		//moving object should update its img
 		img.setBounds(x, y, width, height);
 	}
 	
 	//move object its call on to the right
 	public void moveRight() {
-		x+=width;
+		x+=10;
 		img.setBounds(x, y, width, height);
 	}
 	

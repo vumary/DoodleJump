@@ -38,6 +38,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	
+	//flags for movement
+	boolean left = false;
+	boolean right = false;
+	
 	Player player = new Player(playerimg);
 		
 	//only do drawing for paint
@@ -56,6 +60,14 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		if(player.getY()<150&&player.getX()<350&&player.getX()>250) {
 			won = true;
 			win.setVisible(won);
+		}
+		
+		//lateral movement of player
+		if(left) {
+			player.moveLeft();
+		}
+		if(right) {
+			player.moveRight();
 		}
 		
 		
@@ -118,11 +130,11 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	public void keyPressed(KeyEvent e) {
 		
 		if(e.getKeyCode()==39){ //39 is right
-			player.moveRight();
+			right = true;
 		}
 		
 		if(e.getKeyCode()==37){ //37 is left
-			player.moveLeft();
+			left = true;
 		}
 		update();
 	}
@@ -130,7 +142,14 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
+		if(e.getKeyCode()==39){ //39 is right
+			right = false;
+		}
 		
+		if(e.getKeyCode()==37){ //37 is left
+			left = false;
+		}
+		update();
 	}
 
 	@Override
