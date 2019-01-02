@@ -35,6 +35,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	String wn = "win.png";
 	JLabel win;
 	String playerimg = "player.png";
+	String blockimg = "block.png";
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	
@@ -43,6 +44,32 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	boolean right = false;
 	
 	Player player = new Player(playerimg);
+	
+	
+	
+	/*
+	 * 
+	 * 
+	 * TESTING BELOW
+	 * 
+	 * 
+	 */
+	
+	//RANDOM INT FOR TESTING
+	int randnum = (int)(Math.random() * screen_width);
+	
+	//Testing block***********************************************************************************************
+	Block block = new Block(blockimg, randnum, 100, 50,20);
+	
+	Stationary stationary = new Stationary(blockimg, 300);
+	
+	/*
+	 * 
+	 * 
+	 * TESTING ABOVE
+	 * 
+	 * 
+	 */
 		
 	//only do drawing for paint
 	public void paint(Graphics g) {
@@ -56,6 +83,15 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	/* do not draw here */
 	public void update() {
+		
+		
+		/*
+		 * 
+		 * IF THERE IS COLLISION WITH THE BLOCK THEN BOOST A CERTAIN AMOUNT
+		 * TESTING BLOCK CLASS******************************************************************************************
+		 * 
+		 */
+		
 		
 		if(player.getY()<150&&player.getX()<350&&player.getX()>250) {
 			won = true;
@@ -114,6 +150,11 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		//Add Frog Character (img)
 		f.add(player.getImg());
+		
+		//BLOCK TESTING***********************************************************************************************
+		f.add(block.getImg());
+		//STATIONARY BLOCK TESTING***********************************************************************************************
+		f.add(stationary.getImg());
 		
 		//add background after
 		f.add(background);
