@@ -34,7 +34,12 @@ public class Player {
 	
 	//move object its call on to the left
 	public void moveLeft() {
-		x-=10;
+		x-=7;
+		
+		if(x < 0) {
+			x=600-width;
+		} 
+		
 		//moving object should update its img
 		img.setBounds(x, y, width, height);
 	}
@@ -42,6 +47,9 @@ public class Player {
 	//move object its call on to the right
 	public void moveRight() {
 		x+=10;
+		if(x > 600) {
+			x=width;
+		}
 		img.setBounds(x, y, width, height);
 	}
 	

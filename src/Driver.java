@@ -59,9 +59,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	int randnum = (int)(Math.random() * screen_width);
 	
 	//Testing block***********************************************************************************************
-	Block block = new Block(blockimg, randnum, 100, 50,20);
-	
 	Stationary stationary = new Stationary(blockimg, 300);
+	
+	ArrayList<Stationary> stationaries = new ArrayList<Stationary>();
+	
 	
 	/*
 	 * 
@@ -91,6 +92,24 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		 * TESTING BLOCK CLASS******************************************************************************************
 		 * 
 		 */
+		
+		
+		
+		
+		/*
+	for(int i=0; i < greenCars.size();i++) {
+			GreenCar temp = greenCars.get(i);
+			temp.move();
+		}
+		}
+		*/
+		
+		
+		//TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
+		for(int i=0; i<stationaries.size(); i++) {
+			Stationary temp = stationaries.get(i);
+			temp.moveDown();
+		}
 		
 		
 		if(player.getY()<150&&player.getX()<350&&player.getX()>250) {
@@ -148,13 +167,21 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		f.add(scoreLabel);
 		
+		
+		//instantiating stationaries
+		
+		int y = 600;
+		for(int i =0; i<20; i++) {
+			Stationary newStationary = new Stationary(blockimg, y);
+			stationaries.add(newStationary);
+			y -= 30;
+			
+			//add to frame
+			f.add(newStationary.getImg());
+		}
+		
 		//Add Frog Character (img)
 		f.add(player.getImg());
-		
-		//BLOCK TESTING***********************************************************************************************
-		f.add(block.getImg());
-		//STATIONARY BLOCK TESTING***********************************************************************************************
-		f.add(stationary.getImg());
 		
 		//add background after
 		f.add(background);
