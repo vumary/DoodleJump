@@ -52,16 +52,6 @@ public class Player {
 		}
 		img.setBounds(x, y, width, height);
 	}
-	
-	public void moveUp() {
-		y-=height;
-		img.setBounds(x, y, width, height);
-	}
-	
-	public void moveDown() {
-		y+=height;
-		img.setBounds(x, y, width, height);
-	}
 
 	public int getX() {
 		return x;

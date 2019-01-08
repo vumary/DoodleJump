@@ -39,39 +39,17 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	
+	int y;
+	
 	//flags for movement
 	boolean left = false;
 	boolean right = false;
 	
 	Player player = new Player(playerimg);
 	
-	
-	
-	/*
-	 * 
-	 * 
-	 * TESTING BELOW
-	 * 
-	 * 
-	 */
-	
-	//RANDOM INT FOR TESTING
-	int randnum = (int)(Math.random() * screen_width);
-	
-	//Testing block***********************************************************************************************
-	Stationary stationary = new Stationary(blockimg, 300);
-	
+	//List of all stationary blocks
 	ArrayList<Stationary> stationaries = new ArrayList<Stationary>();
 	
-	
-	/*
-	 * 
-	 * 
-	 * TESTING ABOVE
-	 * 
-	 * 
-	 */
-		
 	//only do drawing for paint
 	public void paint(Graphics g) {
 		super.paintComponent(g);
@@ -86,31 +64,28 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	public void update() {
 		
 		
-		/*
-		 * 
-		 * IF THERE IS COLLISION WITH THE BLOCK THEN BOOST A CERTAIN AMOUNT
-		 * TESTING BLOCK CLASS******************************************************************************************
-		 * 
-		 */
+		//rectangle representation of the player
+		Rectangle playerRect = new Rectangle(player.getX(), player.getY(), 20, 20);
 		
-		
-		
-		
-		/*
-	for(int i=0; i < greenCars.size();i++) {
-			GreenCar temp = greenCars.get(i);
-			temp.move();
-		}
-		}
-		*/
-		
-		
-		//TESTINGGGGGGGGGGGGGGGGGGGGGGGGGGGGG
 		for(int i=0; i<stationaries.size(); i++) {
-			Stationary temp = stationaries.get(i);
-			temp.moveDown();
+			
+			//rectangle representation of all stationary blocks trucks
+			Rectangle obstacle = new Rectangle(stationaries.get(i).getX(), stationaries.get(i).getY(), 40, 20);
+			
+			if(playerRect.intersects(obstacle)) {
+				//detected overlap between obstacles
+				y = 50;//obstacle.getboost
+				System.out.println("COLLISION");
+			}
 		}
 		
+		if(y > 0) {
+			for(int j=0; j<stationaries.size(); j++) {
+				Stationary temp = stationaries.get(j);
+				temp.moveDown();
+			}
+			y--;
+		}
 		
 		if(player.getY()<150&&player.getX()<350&&player.getX()>250) {
 			won = true;
@@ -171,7 +146,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		//instantiating stationaries
 		
 		int y = 600;
-		for(int i =0; i<20; i++) {
+		for(int i =0; i<30; i++) {
 			Stationary newStationary = new Stationary(blockimg, y);
 			stationaries.add(newStationary);
 			y -= 30;

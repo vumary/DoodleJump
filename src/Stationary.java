@@ -7,6 +7,6 @@ public class Stationary extends Block {
 	 */
 	
 	public Stationary(String filename, int y) {
-		super(filename, (int)(Math.random() * 600), y, 50, 20, 20, 0);
+		super(filename, (int)(Math.random() * 600), y, 50, 20, 100, 0);
 	}
 }

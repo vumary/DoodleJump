@@ -5,12 +5,13 @@ import javax.swing.JLabel;
 
 public class Block {
 	
-	private int boost;	//how much this block boosts the player up
-	private int vel;	//velocity that it moves side to side
-	private int x, y;		//location (random)
-	private String color;
-	private int width, height;	
-	private JLabel img;	
+	protected int boost;	//how much this block boosts the player up
+	protected int vel;	//velocity that it moves side to side
+	protected int x, y;		//location (random)
+	protected int initialY;	//initial position of the block
+	protected String color;
+	protected int width, height;	
+	protected JLabel img;	
 	
 	public Block(String filename, int x, int y, int width, int height, int boost, int vel) {
 		String src = new File("").getAbsolutePath()+"/src/";
@@ -22,19 +23,24 @@ public class Block {
 		this.height = height;
 		this.x = x;
 		this.y = y;
+		this.initialY = y;
 		this.boost = boost;
 		this.vel = vel;
 		img.setBounds(x, y, width, height);
 	}
 	
 	public void moveDown() {
-		y+=1;
-		
-		if(y>600) {
-			y=0-height;
-		}
-		
+		y+=2;
 		img.setBounds(x, y, width, height);
+		
+	}
+
+	public int getInitialY() {
+		return initialY;
+	}
+
+	public void setInitialY(int initialY) {
+		this.initialY = initialY;
 	}
 
 	public int getVel() {
