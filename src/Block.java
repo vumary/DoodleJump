@@ -30,9 +30,14 @@ public class Block {
 	}
 	
 	public void moveDown() {
-		y+=2;
+		y+=4;
 		img.setBounds(x, y, width, height);
 		
+	}
+	
+	public void moveUp() {
+		y-=2;
+		img.setBounds(x, y, width, height);
 	}
 
 	public int getInitialY() {

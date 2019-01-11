@@ -9,8 +9,8 @@ public class Player {
 	private int dir;			
 	private int width, height;	
 	private JLabel img;	
-	int score =0; 	
-	
+	int score =0; 
+
 	//add constructor that takes in a file name
 	public Player(String filename) {
 		String src = new File("").getAbsolutePath()+"/src/";
@@ -18,10 +18,10 @@ public class Player {
 		img = new JLabel(ghost); //connect 
 		
 		//bound img to the object
-		width = 20;
-		height = 20;
+		width = 60;
+		height = 60;
 		x = 600/2 - width/2;
-		y = 500;
+		y = 400;
 		img.setBounds(x, y, width, height);
 	}
 	
@@ -35,21 +35,22 @@ public class Player {
 	//move object its call on to the left
 	public void moveLeft() {
 		x-=7;
-		
 		if(x < 0) {
-			x=600-width;
+			x=600+width;
 		} 
-		
 		//moving object should update its img
 		img.setBounds(x, y, width, height);
 	}
 	
 	//move object its call on to the right
 	public void moveRight() {
-		x+=10;
+		
+		x+=7;
+		
 		if(x > 600) {
-			x=width;
+			x=-width;
 		}
+		
 		img.setBounds(x, y, width, height);
 	}
 
