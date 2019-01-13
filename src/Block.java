@@ -30,13 +30,13 @@ public class Block {
 	}
 	
 	public void moveDown() {
-		y+=4;
+		y+=5;
 		img.setBounds(x, y, width, height);
 		
 	}
 	
 	public void moveUp() {
-		y-=2;
+		y-=5;
 		img.setBounds(x, y, width, height);
 	}
 
@@ -112,4 +112,13 @@ public class Block {
 		this.img = img;
 	}
 
+	public void moveLeft() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	public void moveRight() {
+
+}
+	
 }

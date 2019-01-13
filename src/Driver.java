@@ -30,13 +30,14 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	int max_vals = 200;
 	int size = 30;
 	int g = 0;
-	String bg = "background.png";
+	String bg = "bg.png";
 	JLabel background;
 	String wn = "win.png";
 	JLabel win;
 	String playerimg = "wilsonn.png";
 	String stationaryBlockimg = "block.png";
 	String boostedBlockimg = "boosted.png";
+	String blueBlockimg = "blueblock.png";
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	boolean falling = false;
@@ -50,13 +51,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	Player player = new Player(playerimg);
 	
-	//List of all stationary blocks
-	ArrayList<Stationary> stationaries = new ArrayList<Stationary>();
-	
-	//List of all boosted blocks
-	ArrayList<Boosted> boosted = new ArrayList<Boosted>();
-	
 	ArrayList<Block> blocks = new ArrayList<Block>();
+	
+	//change values later
+	Background _background = new Background(bg, -5000);
 	
 	//only do drawing for paint
 	public void paint(Graphics g) {
@@ -73,32 +71,13 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 
 		//rectangle representation of the player
 		Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
-		/*
-		for(int i=0; i<stationaries.size(); i++) {
-			
-			//rectangle representation of all stationary blocks
-			Rectangle obstacle = new Rectangle(stationaries.get(i).getX(), stationaries.get(i).getY(), stationaries.get(0).getWidth(), stationaries.get(0).getHeight());
-			
-			//rectangle representation of all boosted blocks
-			//Rectangle obstacle2 = new Rectangle(boosted.get(i).getX(), boosted.get(i).getY(), boosted.get(0).getWidth(), boosted.get(0).getHeight());
-			
-			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-2<=stationaries.get(i).getY())) {
-				//detected overlap between obstacles
-				start = false;
-				boostDist = stationaries.get(0).getBoost();
-			}
-			
-		}
-		*/
+		
 		for(int i=0; i<blocks.size(); i++) {
 			
 			//rectangle representation of all stationary blocks
 			Rectangle obstacle = new Rectangle(blocks.get(i).getX(), blocks.get(i).getY(), blocks.get(0).getWidth(), blocks.get(0).getHeight());
-			
-			//rectangle representation of all boosted blocks
-			//Rectangle obstacle2 = new Rectangle(boosted.get(i).getX(), boosted.get(i).getY(), boosted.get(0).getWidth(), boosted.get(0).getHeight());
-			
-			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-5<=blocks.get(i).getY())) {
+
+			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-7<=blocks.get(i).getY())) {
 				//detected overlap between obstacles
 				start = false;
 				boostDist = blocks.get(i).getBoost();
@@ -116,20 +95,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		 * */
 		
 		if(boostDist > 0) {
-			/*
-			for(int j=0; j<stationaries.size(); j++) {
-				Stationary temp = stationaries.get(j);
-				temp.moveDown();
-			}
-			
-			for(int j=0; j<boosted.size(); j++) {
-				Boosted temp = boosted.get(j);
-				temp.moveDown();
-			}
-			*/
 			for(int j=0; j<blocks.size(); j++) {
 				Block temp = blocks.get(j);
-				temp.moveDown();
+				temp.moveDown();	
 			}
 		}
 		
@@ -139,26 +107,13 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		 * boost down
 		 * 
 		 */
-		
 		if(boostDist < 0) {
-			/*
-			for(int j=0; j<stationaries.size(); j++) {
-				Stationary temp = stationaries.get(j);
-				temp.moveUp();
-			}
-			
-			for(int j=0; j<boosted.size(); j++) {
-				Boosted temp = boosted.get(j);
-				temp.moveUp();
-			}
-			*/
 			for(int j=0; j<blocks.size(); j++) {
 				Block temp = blocks.get(j);
 				temp.moveUp();
+				
 			}
 		}
-		
-		
 		
 		if(player.getY()<150&&player.getX()<350&&player.getX()>250) {
 			won = true;
@@ -218,33 +173,37 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		//instantiating stationaries
 		int y = 900;
-		for(int i =-0; i<30; i++) {
-			Stationary newStationary = new Stationary(stationaryBlockimg, y);
-			stationaries.add(newStationary);
-			blocks.add(newStationary);
+
+		for(int i =-0; i<80; i++) {
+			
+			Block newBlock;
+			double check = Math.random(); //0 to 1; if it's greater than 0.9 spawn a boosted block
+			if(check>=0.75) {
+				newBlock = new BlueBalls(blueBlockimg, y);
+			}
+			else if(check>=0.6) {
+				//spawn a boosted block
+				 newBlock = new Boosted(boostedBlockimg, y);
+			}
+			else {
+				 newBlock = new Stationary(stationaryBlockimg, y);
+			}
+			blocks.add(newBlock);
 			y -= 100;
 			
 			//add to frame
-			f.add(newStationary.getImg());
+			f.add(newBlock.getImg());
 		}
 		
-		//instantiating boosted
-		y = 900;
-		for(int i =-0; i<30; i++) {
-			Boosted newBoosted = new Boosted(boostedBlockimg, y);
-			boosted.add(newBoosted);
-			blocks.add(newBoosted);
-			y -= 200;
-			
-			//add to frame
-			f.add(newBoosted.getImg());
-		}
 		
 		//Add Frog Character (img)
 		f.add(player.getImg());
 		
 		//add background after
 		f.add(background);
+		
+		//add the ACTUAL background after everything
+		f.add(_background.getImg());
 		
 		//end creating objects
 		t = new Timer(17,this);

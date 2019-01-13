@@ -1,11 +1,5 @@
 public class Stationary extends Block {
 	
-	/*
-	 	int x = (int)(Math.random() * 600);
-		int width = 50;
-		int height = 20;
-	 */
-	
 	public Stationary(String filename, int y) {
 		
 		//String filename, int x, int y, int width, int height, int boost, int vel
