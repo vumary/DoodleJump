@@ -7,11 +7,11 @@ public class Boosted extends Block {
 	
 	//change boost or something
 	public void moveUp() {
-		y-=5;
+		y-=8;
 		img.setBounds(x, y, width, height);
 	}
 	public void moveDown() {
-		y+=5;
+		y+=8;
 		img.setBounds(x, y, width, height);
 	}
 }

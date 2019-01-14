@@ -51,7 +51,8 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	Player player = new Player(playerimg);
 	
-	ArrayList<Block> blocks = new ArrayList<Block>();
+	ArrayList<Block> blocks = new ArrayList<Block>(); //all blocks
+	ArrayList<Block> blueBlocks = new ArrayList<Block>(); //list of only blueBalls, loop through this to update
 	
 	//change values later
 	Background _background = new Background(bg, -5000);
@@ -128,6 +129,27 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 			player.moveRight();
 		}
 		
+		//move blueBalls
+		for(Block i : blueBlocks) {
+			
+			if(i.getX() >= 100 + i.getInitialX()) {
+				//right half, so move left
+				i.setLeft(true);
+			}
+			
+			if(i.getX()<= i.getInitialX() - 100) {
+				i.setLeft(false);
+			}
+			
+			if(i.getLeft()) {
+				i.moveLeft();
+			}
+			
+			if(!(i.getLeft())) {
+				i.moveRight();
+			}
+
+		}
 		
 	}//end of update method - put code above for any updates on variable
 		
@@ -172,14 +194,16 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		
 		//instantiating stationaries
-		int y = 900;
+		int y = 5000;
 
-		for(int i =-0; i<80; i++) {
+		for(int i =-0; i<200; i++) {
 			
 			Block newBlock;
 			double check = Math.random(); //0 to 1; if it's greater than 0.9 spawn a boosted block
-			if(check>=0.75) {
-				newBlock = new BlueBalls(blueBlockimg, y);
+			if(check>=0.8) {
+				newBlock = new BlueBalls(blueBlockimg, (int)(Math.random() * 600), y);
+				blueBlocks.add(newBlock);
+				
 			}
 			else if(check>=0.6) {
 				//spawn a boosted block

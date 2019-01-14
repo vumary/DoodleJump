@@ -8,7 +8,6 @@ public class Block {
 	protected int boost;	//how much this block boosts the player up
 	protected int vel;	//velocity that it moves side to side
 	protected int x, y;		//location (random)
-	protected int initialY;	//initial position of the block
 	protected String color;
 	protected int width, height;	
 	protected JLabel img;	
@@ -23,10 +22,20 @@ public class Block {
 		this.height = height;
 		this.x = x;
 		this.y = y;
-		this.initialY = y;
 		this.boost = boost;
 		this.vel = vel;
 		img.setBounds(x, y, width, height);
+	}
+	
+	public boolean getLeft() {
+		return false;
+	}
+
+	public void setLeft(boolean left) {
+	}
+	
+	public int getInitialX() {
+		return 0;
 	}
 	
 	public void moveDown() {
@@ -38,14 +47,6 @@ public class Block {
 	public void moveUp() {
 		y-=5;
 		img.setBounds(x, y, width, height);
-	}
-
-	public int getInitialY() {
-		return initialY;
-	}
-
-	public void setInitialY(int initialY) {
-		this.initialY = initialY;
 	}
 
 	public int getVel() {
