@@ -7,7 +7,7 @@ public class Player {
 	
 	private int x, y;
 	private int dir;			
-	private int width, height;	
+	private final int width, height;	
 	private JLabel img;	
 	int score =0; 
 
@@ -90,17 +90,12 @@ public class Player {
 		this.score = score;
 	}
 	
-	public void setWidth(int width) {
-		this.width = width;
-	}
 
 	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
+
 
 	public JLabel getImg() {
 		return img;

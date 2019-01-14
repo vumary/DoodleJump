@@ -30,7 +30,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	int max_vals = 200;
 	int size = 30;
 	int g = 0;
-	String bg = "bg.png";
+	String bg = "";
 	JLabel background;
 	String wn = "win.png";
 	JLabel win;
@@ -38,6 +38,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	String stationaryBlockimg = "block.png";
 	String boostedBlockimg = "boosted.png";
 	String blueBlockimg = "blueblock.png";
+	String actualBackgroundimg = "bg.png";
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	boolean falling = false;
@@ -50,12 +51,13 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	boolean right = false;
 	
 	Player player = new Player(playerimg);
+	Background actualBackground = new Background(actualBackgroundimg, 100);
 	
 	ArrayList<Block> blocks = new ArrayList<Block>(); //all blocks
 	ArrayList<Block> blueBlocks = new ArrayList<Block>(); //list of only blueBalls, loop through this to update
 	
+	
 	//change values later
-	Background _background = new Background(bg, -5000);
 	
 	//only do drawing for paint
 	public void paint(Graphics g) {
@@ -73,15 +75,17 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		//rectangle representation of the player
 		Rectangle playerRect = new Rectangle(player.getX(), player.getY(), player.getWidth(), player.getHeight());
 		
-		for(int i=0; i<blocks.size(); i++) {
+		for(int i=1; i<blocks.size(); i++) { //don't include bg
 			
 			//rectangle representation of all stationary blocks
-			Rectangle obstacle = new Rectangle(blocks.get(i).getX(), blocks.get(i).getY(), blocks.get(0).getWidth(), blocks.get(0).getHeight());
+			Rectangle obstacle = new Rectangle(blocks.get(i).getX(), blocks.get(i).getY(), blocks.get(1).getWidth(), blocks.get(1).getHeight());
 
-			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-7<=blocks.get(i).getY())) {
+			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-8<=blocks.get(i).getY())) {
 				//detected overlap between obstacles
 				start = false;
 				boostDist = blocks.get(i).getBoost();
+				System.out.println(i + "\t type:\t" + blocks.get(i).toString());
+
 			}
 			
 		}
@@ -98,7 +102,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		if(boostDist > 0) {
 			for(int j=0; j<blocks.size(); j++) {
 				Block temp = blocks.get(j);
-				temp.moveDown();	
+				temp.moveDown();
+				//actualBackground.moveDown();
+				
 			}
 		}
 		
@@ -108,11 +114,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		 * boost down
 		 * 
 		 */
+		
 		if(boostDist < 0) {
 			for(int j=0; j<blocks.size(); j++) {
 				Block temp = blocks.get(j);
 				temp.moveUp();
-				
+				//actualBackground.moveUp();
 			}
 		}
 		
@@ -172,10 +179,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		f.setSize(screen_width, screen_height);
 		f.getContentPane().setBackground(Color.black);
 		String src = new File("").getAbsolutePath()+"/src/"; //path to image setup
-		ImageIcon backg = new ImageIcon(src+bg);    //setups icon image
+	//	ImageIcon backg = new ImageIcon(src+bg);    //setups icon image
 		ImageIcon winner = new ImageIcon(src+wn);    //setups icon image
-		background = new JLabel(backg);
-		background.setBounds(0,0,600,600); //set location and size of icon
+		//background = new JLabel(backg);
+	//	background.setBounds(0,0,600,600); //set location and size of icon
 		win= new JLabel(winner);
 		win.setBounds(0,0,600,600);
 		win.setVisible(false);
@@ -192,8 +199,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		f.add(scoreLabel);
 		
-		
-		//instantiating stationaries
+		//Add Frog Character (img)
+		f.add(player.getImg());
+		//instantiating blocks
 		int y = 5000;
 
 		for(int i =-0; i<200; i++) {
@@ -220,14 +228,17 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		}
 		
 		
-		//Add Frog Character (img)
-		f.add(player.getImg());
+		blocks.add(0, actualBackground);
+		
+		//adding background to blocks
+		f.add(actualBackground.getImg());
+
 		
 		//add background after
-		f.add(background);
+		//f.add(background);
 		
-		//add the ACTUAL background after everything
-		f.add(_background.getImg());
+		
+		
 		
 		//end creating objects
 		t = new Timer(17,this);

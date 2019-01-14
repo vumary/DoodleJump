@@ -9,7 +9,7 @@ public class Block {
 	protected int vel;	//velocity that it moves side to side
 	protected int x, y;		//location (random)
 	protected String color;
-	protected int width, height;	
+	protected final int width, height;	
 	protected JLabel img;	
 	
 	public Block(String filename, int x, int y, int width, int height, int boost, int vel) {
@@ -93,18 +93,12 @@ public class Block {
 		return width;
 	}
 
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
+	
 	public int getHeight() {
 		return height;
 	}
 
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
+	
 	public JLabel getImg() {
 		return img;
 	}
@@ -121,5 +115,8 @@ public class Block {
 	public void moveRight() {
 
 }
+	public String toString() {
+		return "Block";
+	}
 	
 }

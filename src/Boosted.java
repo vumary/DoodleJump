@@ -14,4 +14,7 @@ public class Boosted extends Block {
 		y+=8;
 		img.setBounds(x, y, width, height);
 	}
+	public String toString() {
+		return "Boosted";
+	}
 }

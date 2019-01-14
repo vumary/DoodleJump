@@ -43,4 +43,7 @@ public class BlueBalls extends Block{
 		img.setBounds(x, y, width, height);
 
 	}
+	public String toString() {
+		return "Blueee BAls";
+	}
 }
