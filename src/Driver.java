@@ -40,9 +40,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	String actualBackgroundimg = "bg.png";
 	String coolBlockimg = "coolblock40w53h.png";
 	String playerimg = "wilsonn.png";
-	String groundimg = "";
 	String monsterimg = "monster-ConvertImage.png";
-	String gameOverimg = "gameOver3.jpg";
+	String gameOverimg = "lose.png";
+	String winimg = "win.png";
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
 	boolean falling = false;
@@ -57,9 +57,9 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	boolean right = false;
 	
 	Lose lose = new Lose(gameOverimg);
+	Lose realWin = new Lose(winimg);
 	Player player = new Player(playerimg);
 	Background actualBackground = new Background(actualBackgroundimg, 100);
-	Ground ground = new Ground(groundimg, 0);
 	
 	ArrayList<Block> blocks = new ArrayList<Block>(); //all blocks
 	ArrayList<Monster> monsters = new ArrayList<Monster>();
@@ -91,8 +91,12 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
       carx = 90;
     }
  */
-		if(blocks.get(200).getY() > player.getY() || blocks.get(1).getY() < player.getY()) {
+		if(blocks.get(1).getY() < player.getY()) {
 			showScreen();
+		}
+		
+		if(blocks.get(200).getY() > player.getY()) {
+			showWinScreen();
 		}
 		
 		//rectangle representation of the player
@@ -125,7 +129,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 			//rectangle representation of all monsters
 			Rectangle obstacle = new Rectangle(monsters.get(i).getX(), monsters.get(i).getY(), monsters.get(i).getWidth(), monsters.get(i).getHeight());
 			
-			if(playerRect.intersects(obstacle)&&(boostDist < 0)&&(player.getY()+player.getHeight()-buffer<=monsters.get(i).getY())) {
+			if(playerRect.intersects(obstacle)) {
 				//detected overlap between obstacles
 				//start = false;
 				monsterFalling = true;
@@ -310,8 +314,6 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 			}
 			
 			if(i.getLeft()) {
-				//i.moveLeft();
-				
 				i.moveLeft();
 				
 			}
@@ -328,6 +330,31 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	}//end of update method - put code above for any updates on variable
 		
 	
+	private void showWinScreen() {
+		JFrame f2 = new JFrame();
+		f2.setTitle("Click Em");
+		f2.setSize(screen_width, screen_height);
+		f2.getContentPane().setBackground(Color.black);
+		String src2 = new File("").getAbsolutePath()+"/src/"; //path to image setup
+	//	ImageIcon backg = new ImageIcon(src+bg);    //setups icon image
+		ImageIcon winner2 = new ImageIcon(src2+wn);    //setups icon image
+		//background = new JLabel(backg2);
+	//	background.setBounds(0,0,600,600); //set location and size of icon
+		win= new JLabel(winner2);
+		win.setBounds(0,0,600,600);
+		win.setVisible(false);
+		f2.add(win);
+		f2.setResizable(false);
+		f2.setLayout(null);
+		f2.addKeyListener(this);
+		f2.addMouseMotionListener(this);
+		
+		f2.add(realWin.getImg());
+		f2.setVisible(true);
+		
+	}
+
+
 	private void showScreen() {
 		JFrame f2 = new JFrame();
 		f2.setTitle("Click Em");
@@ -438,14 +465,6 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		//adding background to blocks
 		f.add(actualBackground.getImg());
-		
-		//adding ground
-		f.add(ground.getImg());
-
-		
-		//add background after
-		//f.add(background);
-		
 		
 		
 		
