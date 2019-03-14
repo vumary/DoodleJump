@@ -45,6 +45,7 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	String winimg = "win.png";
 	
 	boolean won = false;		//if the player won this variable will be set to true, else it will be false
+	boolean lost = false; //flag
 	boolean falling = false;
 	boolean start = true;
 	boolean monsterFalling = false;
@@ -91,11 +92,18 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
       carx = 90;
     }
  */
-		if(blocks.get(1).getY() < player.getY()) {
+		if(lost) {
 			showScreen();
 		}
 		
+		if(blocks.get(1).getY() < player.getY()) {
+			lost = true;
+			
+		}
+		
+		
 		if(blocks.get(200).getY() > player.getY()) {
+			
 			showWinScreen();
 		}
 		
@@ -351,6 +359,8 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		
 		f2.add(realWin.getImg());
 		f2.setVisible(true);
+		f2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		
 	}
 
@@ -375,7 +385,10 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 		f2.addMouseMotionListener(this);
 		
 		f2.add(lose.getImg());
+		f2.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		f2.setVisible(true);		
+		
 	}
 
 
@@ -383,8 +396,11 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		update();
-		repaint();
+		if(!lost && !won) {
+			update();
+			repaint();
+		}
+
 	}
 	
 	public static void main(String[] arg) {
@@ -492,11 +508,11 @@ public class Driver extends JPanel implements ActionListener, KeyListener, Mouse
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode()==39){ //39 is right
+		if(e.getKeyCode()==39 && !lost && !won){ //39 is right
 			right = false;
 		}
 		
-		if(e.getKeyCode()==37){ //37 is left
+		if(e.getKeyCode()==37 && !lost && !won){ //37 is left
 			left = false;
 		}
 		update();
